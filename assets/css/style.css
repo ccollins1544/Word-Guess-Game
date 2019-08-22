@@ -192,6 +192,7 @@ hr {
   animation-name: navbar_brand_animation;
   animation-duration: 2s;
   animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
   -webkit-animation-timing-function: ease-in-out;
 }
 
@@ -305,6 +306,7 @@ hr {
   animation-name: lnkedin_animation;
   animation-duration: 2s;
   animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
   -webkit-animation-timing-function: ease-in-out;
 }
 
@@ -340,6 +342,7 @@ hr {
   animation-name: devio_animation;
   animation-duration: 2s;
   animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
   -webkit-animation-timing-function: ease-in-out;
 }
 
@@ -375,6 +378,7 @@ hr {
   animation-name: github_animation;
   animation-duration: 2s;
   animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
   -webkit-animation-timing-function: ease-in-out;
 }
 
