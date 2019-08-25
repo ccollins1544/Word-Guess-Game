@@ -159,30 +159,41 @@ class WordGuessingGame {
 
   resetGame(){
     console.log("Reset Game Called!");
-    var filteredCorrectLetters = this.the_word.filter(function(v){ return v != "_" });
-    this.guessesLeft = this.lettersGuest.length + filteredCorrectLetters.length;
-
-    this.words = words.concat(this.previousWords);    
+    // var filteredCorrectLetters = this.the_word.filter(function(v){ return v != "_" });
+    // console.log("Guesses LEFT",);
+    // console.log(this.lettersGuest.length + " + " + filteredCorrectLetters.length);
+    this.guessesLeft = this.lettersGuest.length + this.guessesLeft;
+    
+    this.words = this.words.concat(this.previousWords);    
     console.log("Guesses Left", this.guessesLeft);
     console.log("WordObject", this.words);
+    
+    this.previousWords = []; // Words already played        
+    this.lettersGuest = []
+    this.currentWordLetters = []; 
+    this.currentWordObject = {};
+    this.the_word = []; // This represents the letters guessed and blanks "_"  
+    this.wins = 0;
+    this.losses = 0;
 
     this.setRandomWord();
   } // END resetGame()
 
   resetWord(response=false){
     console.log("resetWord Called");
-    var filteredCorrectLetters = this.the_word.filter(function(v){ return v != "_" });
-    this.guessesLeft = this.lettersGuest.length + filteredCorrectLetters.length;
-
     this.previousWords.push(this.currentWordObject);
-
+    
     // Check if game is over or if we can move on to the next round.
     if(this.words.length === 0){ //} && (this.wins > 0 || this.losses > 0) ){
       return true;
     }
+    
+    // var filteredCorrectLetters = this.the_word.filter(function(v){ return v != "_" });
+    this.guessesLeft = this.lettersGuest.length + this.guessesLeft;
+    this.lettersGuest = [];
 
     this.setRandomWord();
-    console.log(this.lettersGuest.length + " + " + filteredCorrectLetters.length);
+    // console.log(this.lettersGuest.length + " + " + filteredCorrectLetters.length);
     return response;
   }
 
