@@ -18,6 +18,7 @@
   2.2 Hamburger Nav
 
 3.0 MAIN LAYOUT INFO
+  3.1 Game Layout
 
 4.0 FOOTER
   4.1 Footer Links and Credits
@@ -91,7 +92,7 @@ article#main-container {
 
 section#main-section {
   border-radius: 5px;
-  padding-bottom: 15px;
+  padding: 1rem 2rem !important;
   margin-bottom: 50px;
   border-color: var(--primary-menu-background);
   box-shadow: 0px 12px 18px -6px var(--primary-menu-background);
@@ -254,6 +255,24 @@ hr {
 /*------------------------------------------------------*/
 /*--------------[ 3.0 MAIN LAYOUT INFO ]----------------*/
 /*------------------------------------------------------*/
+/* 3.1 Game Layout
+/*------------------------------------------------------*/
+#game_stats {
+  max-width: 415px;
+}
+
+#game_stats .badge {
+  position: absolute !important;
+  right: 15px;
+}
+
+#letters_guest {
+  border-top-color: transparent !important;
+}
+
+/* #alert_message {
+  color: var(--cool-red);
+} */
 
 
 /*------------------------------------------------------*/

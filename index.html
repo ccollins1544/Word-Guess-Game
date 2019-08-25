@@ -76,16 +76,38 @@
 
   <!-- Main Container -->
   <article id="main-container" class="content-wrapper">
-    <section class="section-block" id="main-section">
-      <h1>Trivia</h1>
+    <section class="section-block jumbotron" id="main-section">
+      <h1 id="word_catetory"></h1>
+      <img src="https://placehold.it/900x300" class="img-fluid w-100" id="current_word_image" alt="Responsive image">
       <div class="container">
         <div class="row first-row">
-          <h2>Press Any Key To Guess This Word!</h2>
+          <h2 class="mx-auto">Press Any Key To Guess This Word!</h2>
         </div>
         <hr />
         <div class="row">
-          <div class="container-fluid">
-            <p>WORD</p>
+          <div class="col-12 col-md-12 mx-auto" id="game_stats">
+            <ul class="list-group">
+
+              <li class="list-group-item d-flex justify-content-center align-items-center list-group-item-primary">
+                <span id="current_word">_ _ _</span>
+                <span class="badge badge-primary badge-pill" id="current_word_length"></span>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-center align-items-center list-group-item-warning">
+                Number of Guesses Remaining
+                <span class="badge badge-warning badge-pill" id="guesses_remaining"></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-center align-items-center list-group-item-warning">
+                Letters Already Guessed
+                <span class="badge badge-info badge-pill" id="letters_guest_counter">0</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-center align-items-center list-group-item-warning"
+                id="letters_guest">
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-12 text-center">
+            <div id="alert_message" class="alert"></div>
           </div>
         </div>
       </div>
