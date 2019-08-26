@@ -168,8 +168,8 @@ hr {
 
 /* Focused or Hover Nav Link */
 #main-nav .navbar-nav .nav-link:focus,
-#main-nav .navbar-nav .nav-link:hover,
 #mobile-nav .navbar-nav .nav-link:focus,
+#main-nav .navbar-nav .nav-link:hover,
 #mobile-nav .navbar-nav .nav-link:hover {
   color: rgba(255, 255, 255, 1);
 }
@@ -280,6 +280,7 @@ hr {
 }
 
 #current_word_image {
+  display: none;
   margin-top: 5px;
   border-color: var(--primary-menu-background);
   background-color: var(--body-text);
@@ -294,11 +295,11 @@ hr {
   background-color: rgba(82, 97, 107, 0.5);
 }
 
-#total_wins {
+.total_wins {
   color: #28a745;
 }
 
-#total_losses {
+.total_losses {
   color: var(--cool-red);
 }
 

@@ -103,6 +103,7 @@ class WordGuessingGame {
   currentWordObject = {};
   the_word = []; // This represents the letters guessed and blanks "_"
   guessesLeft = 0;    
+  surrenderedGuesses = 0; // When skipping words the remaining guesses are surrendered.
   wins = 0;
   losses = 0;
 
@@ -114,6 +115,10 @@ class WordGuessingGame {
   GUESSES_LEFT = document.getElementById("guesses_remaining");
   LETTERS_GUEST = document.getElementById("letters_guest");
   LETTERS_GUEST_COUNT = document.getElementById("letters_guest_counter");
+  TOTAL_ROUNDS = document.getElementById("total_rounds");
+  PROGRESS_BARS = document.getElementById("game_progress");
+  WINS = document.getElementById("total_wins");
+  LOSSES = document.getElementById("total_losses");
   alertMessage = document.getElementById("alert_message");
 
   constructor(secretWords = this.#defaultWords, wordcat = this.#defaultCategory, guessCount = this.#defaultGuesses) {
@@ -146,11 +151,18 @@ class WordGuessingGame {
     // Set DOM Elements for the round
     this.WORD.innerHTML = this.the_word.join(" ");
     this.WORD_LEN.innerHTML = this.currentWordObject.word.length;
+    this.WORD_IMG.style.display = "none";
     this.WORD_IMG.src = (this.imageExists(this.currentWordObject.image)) ? this.currentWordObject.image : this.WORD_IMG.src;
     this.WORD_CAT.innerHTML = this.wordCategory;
     this.GUESSES_LEFT.innerHTML = this.guessesLeft;
     this.LETTERS_GUEST.innerHTML = this.lettersGuest;
     this.LETTERS_GUEST_COUNT.innerHTML = this.lettersGuest.length;
+    this.TOTAL_ROUNDS.innerHTML = (+this.wins + +this.losses) + " of " + (+this.words.length + +this.previousWords.length + +1);
+    this.PROGRESS_BARS.querySelector(".bg-success").innerHTML = (((+this.wins)/(+this.words.length + +this.previousWords.length + +1))*100).toFixed(0) + "%";
+    this.PROGRESS_BARS.querySelector(".bg-success").style.width = (((+this.wins)/(+this.words.length + +this.previousWords.length + +1))*100).toFixed(0) + "%";
+    this.PROGRESS_BARS.querySelector(".bg-danger").innerHTML = (((+this.losses)/(+this.words.length + +this.previousWords.length + +1))*100).toFixed(0) + "%";
+    this.PROGRESS_BARS.querySelector(".bg-danger").style.width = (((+this.losses)/(+this.words.length + +this.previousWords.length + +1))*100).toFixed(0) + "%";
+    
 
     console.log("Current", this.words);
     console.log("Previous",this.previousWords);
@@ -191,7 +203,7 @@ class WordGuessingGame {
     }
     
     // var filteredCorrectLetters = this.the_word.filter(function(v){ return v != "_" });
-    this.guessesLeft = this.lettersGuest.length + this.guessesLeft;
+    this.guessesLeft = this.lettersGuest.length + this.guessesLeft + this.surrenderedGuesses;
     this.lettersGuest = [];
 
     this.setRandomWord();
@@ -311,17 +323,18 @@ class WordGuessingGame {
       // WIN Condition
       if(this.the_word.toString() === this.currentWordLetters.toString()) { 
         this.wins++;
+        this.WINS.innerHTML = this.wins;
         WinOrLose_message = "You Win!";
         winOrLose_alert = "alert-success";
-
+        
       }else if (this.guessesLeft === 0) {  // LOSE Condition
         this.losses++;
+        this.LOSSES.innerHTML = this.losses;
       }
 
       // GAME OVER or not ?
       if(this.resetWord()){
         // GAME OVER!
-        
         var play_again = this.confirm(WinOrLose_message + " Game Over! Do you want to play again?");
         if(play_again){
           this.resetGame();
@@ -337,12 +350,75 @@ class WordGuessingGame {
     
     return;
   } // END checkWinCondition
+
+  toggleHint(el="") {
+    // console.log("THIS--->",this.isElement(el));
+
+    // Check Image Visibility 
+    if(this.WORD_IMG.offsetParent === null){
+      this.WORD_IMG.style.display = "block";
+      if(this.isElement(el)){ el.parentElement.classList.add("active"); }
+    }else{
+      this.WORD_IMG.style.display = "none";
+      if(this.isElement(el)){ el.parentElement.classList.remove("active"); }
+    }
+  } // END toggleHint
+
+  isElement(obj) {
+    try {
+      //Using W3 DOM2 (works for FF, Opera and Chrome)
+      return obj instanceof HTMLElement;
+    }
+    catch(e){
+      //Browsers not supporting W3 DOM2 don't have HTMLElement and
+      //an exception is thrown and we end up here. Testing some
+      //properties that all elements have (works on IE7)
+      return (typeof obj==="object") &&
+        (obj.nodeType===1) && (typeof obj.style === "object") &&
+        (typeof obj.ownerDocument ==="object");
+    }
+  } // END isElement
+
+  skipWord(){
+    this.confirm("By the way the word was '" + this.currentWordObject.word + "'");
+    this.surrenderedGuesses = this.guessesLeft;
+    this.guessesLeft = 0;
+    this.checkWinCondition();
+    return;
+  } // END skipWord
+
+  newGame(){
+    var WinOrLose_message = "It looks like you're losing.\n";
+    var play_again = false;
+    var winOrLose_alert = "alert-danger";
+
+    if(this.wins > this.losses){
+      WinOrLose_message = "It looks like you're winning.\n";
+      winOrLose_alert = "alert-success";
+    }else if(this.wins == this.losses){
+      WinOrLose_message = "It looks like a 50/50 tie between wins and losses.\n";
+    }
+
+    play_again = this.confirm(WinOrLose_message+"Are you sure that you want to start a new game?");
+    if(play_again){
+      this.resetGame();
+    }else{
+      this.alert("Wins: " + this.wins + " Losses: " + this.losses + "<br />Ok Bye!", winOrLose_alert);
+    }
+
+    return;
+  } // END newGame()
+  
 }
 
 /*===============[ 2.0 Frontend]====================*/
 /* 2.1 Create Game Object
 /*--------------------------------------------------*/
 const ThisGame = new WordGuessingGame();
+
+if (!window['GAME']) {
+  window['GAME'] = ThisGame;
+}
 
 /* 2.2 Listen For KeyUp Events
 /*--------------------------------------------------*/
