@@ -34,7 +34,7 @@
           <span class="total_wins">Wins: <span class="badge badge-success" id="total_wins">0</span></span>
           <span class="total_losses">Losses: <span class="badge badge-danger" id="total_losses">0</span></span>
         </div>
-          
+
         <div class="progress" id="game_progress">
           <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar"></div>
           <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"></div>
@@ -42,18 +42,17 @@
 
         <div class="collapse navbar-collapse show">
           <ul class="navbar-nav ml-auto">
-            <!-- Links -->
-            <!-- <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home</a>
-            </li> -->
+
             <li class="nav-item">
               <a class="nav-link" href="#" onclick="GAME.newGame(); return false;">New Game</a>
             </li>
+
             <li class="nav-item">
               <a class="nav-link" href="#" onclick="GAME.skipWord(); return false;">Skip Word</a>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="GAME.toggleHint(this); return false;" >Hint</a>
+              <a class="nav-link" href="#" onclick="GAME.toggleHint(this); return false;">Hint</a>
             </li>
           </ul>
         </div>
@@ -92,7 +91,8 @@
   <article id="main-container" class="content-wrapper">
     <section class="section-block jumbotron" id="main-section">
       <h1 id="word_catetory"></h1>
-      <img src="https://placehold.it/900x300" class="img-thumbnail rounded w-100" id="current_word_image" alt="Responsive image">
+      <img src="https://placehold.it/900x300" class="img-thumbnail rounded w-100" id="current_word_image"
+        alt="Responsive image">
       <div class="container">
         <div class="row first-row">
           <h2 class="mx-auto">Press Any Key To Guess This Word!</h2>
@@ -125,6 +125,10 @@
       </div>
     </section><!-- #main-section -->
   </article><!-- #main-container -->
+
+  <div id="audio_files">
+
+  </div>
 
   <!-- Footer -->
   <footer id="main-footer">
@@ -163,6 +167,9 @@
 
   <!-- GAME JS -->
   <script src="assets/javascript/game.js?v=1.3" type="text/javascript"></script>
+  <script type="text/javascript"> 
+    const ThisGame = new WordGuessingGame(); 
+  </script>
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

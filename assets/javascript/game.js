@@ -3,17 +3,13 @@
  * 
  * @package Word Guess Game
  * @author Christopher Collins
- * @version 1.3
+ * @version 2.0
  * @license none (public domain)
  * 
  * ===============[ TABLE OF CONTENTS ]===============
  * 1.0 Backend
  *   1.1 Initalize Variables
  *   1.2 WordGuessingGame Class Declaration
- * 
- * 2.0 Frontend
- *   2.1 Create Game Object
- *   2.2 Listen For KeyUp Events
  * 
  * A.0 Archived
  * 
@@ -30,64 +26,64 @@ class WordGuessingGame {
   #defaultWords = [{
       "word": "hondacrv",
       "image": "assets/images/cars/honda-cr-v-background.jpg",
-      "sound": "sound_file1.png",
+      "sound": "assets/sounds/RaceCarEngineTrouble.mp3",
     },
     {
       "word": "toyotarav4",
       "image": "assets/images/cars/2019-Toyota-RAV4-feature_o.jpg",
-      "sound": "sound_file2.png",
+      "sound": "assets/sounds/topfuelDragster.mp3",
     },
     {
       "word": "hondacivic",
       "image": "assets/images/cars/Honda-Civic-PNG-Pic.png",
-      "sound": "sound_file3.png",
+      "sound": "assets/sounds/CIVIC-passing-at-high-speed.mp3",
     },
     {
       "word": "toyotahighlander",
       "image": "assets/images/cars/2018-Toyota-Highlander-model.png",
-      "sound": "sound_file4.png",
+      "sound": "assets/sounds/StartCar.mp3",
     },
     {
       "word": "mazdacx5",
       "image": "assets/images/cars/2018-mazda-cx-5-Eternal-Blue-Mica.png",
-      "sound": "sound_file5.png",
+      "sound": "assets/sounds/CAR-Peels-Out.mp3",
     },
     {
       "word": "hondaaccord",
       "image": "assets/images/cars/2018-Honda-Accord-COLOR-Platinum-White.png",
-      "sound": "sound_file6.png",
+      "sound": "assets/sounds/RaceCareScreamBy.mp3",
     },
     {
       "word": "dodgeram1500",
       "image": "assets/images/cars/Dodge-Ram-1500.png",
-      "sound": "sound_file7.png",
+      "sound": "assets/sounds/burnoutHotRod.mp3",
     },
     {
       "word": "chevroletequinox",
       "image": "assets/images/cars/chevy_equinox2019_black.png",
-      "sound": "sound_file8.png",
+      "sound": "assets/sounds/Corvette-pass.mp3",
     },
     {
       "word": "kiatelluride",
       "image": "assets/images/cars/2020-kia-telluride.jpg",
-      "sound": "sound_file9.png",
+      "sound": "assets/sounds/Porsche2.mp3",
     },
     {
       "word": "chevrolettraverse",
       "image": "assets/images/cars/2018-Chevrolet-Traverse-Header.png",
-      "sound": "sound_file10.png",
+      "sound": "assets/sounds/RACECAR.mp3",
     }, {
       "word": "toyotatacoma",
       "image": "assets/images/cars/2018-toyota-tacoma-in-white.png",
-      "sound": "sound_file11.png",
+      "sound": "assets/sounds/car-running3.mp3",
     }, {
       "word": "jeepwrangler",
       "image": "assets/images/cars/jeep-wrangler.png",
-      "sound": "sound_file12.png",
+      "sound": "assets/sounds/JEEP-HORN.mp3",
     }, {
       "word": "hondapilot",
       "image": "assets/images/cars/2019-Honda-Pilot-LX-Hero.png",
-      "sound": "sound_file13.png",
+      "sound": "assets/sounds/BMW-DRIVEBY.mp3",
     },
   ];
 
@@ -120,16 +116,24 @@ class WordGuessingGame {
   WINS = document.getElementById("total_wins");
   LOSSES = document.getElementById("total_losses");
   alertMessage = document.getElementById("alert_message");
+  AUDIO_FILES = document.getElementById("audio_files");
 
   constructor(secretWords = this.#defaultWords, wordcat = this.#defaultCategory, guessCount = this.#defaultGuesses) {
     this.words = secretWords;
     this.wordCategory = wordcat;
     this.guessesLeft = guessCount;
-    this.setRandomWord();
+    
+    var ThatGame = this;
+    document.onkeyup = function (event) { ThatGame.isThere( event.key.toLowerCase() ); return; }
+    window.addEventListener('load', ThatGame.addAudio(), false);
+    
+    // Create Window object that can be accessed via onclick()
+    if (!window['GAME']) { window['GAME'] = ThatGame; }
+
+    this.setRandomWord(); // MUST BE CALLED LAST
   } // END constructor
 
   setRandomWord() {
-    console.log("Called Set Random Word!");
     var min = 0;
     var max = this.words.length;
     var index = Math.floor(Math.random() * Math.floor(+max - +min)) + +min;
@@ -139,9 +143,6 @@ class WordGuessingGame {
 
     // Removes the current_word from the list of words so it can't be selected again.
     this.words.splice(index, 1);
-    
-    console.log("Current Word: "+ this.currentWordObject.word);
-    console.log(this.currentWordLetters);
     
     this.the_word = [];
     for(var i=0; i < this.currentWordLetters.length; i++) {
@@ -157,30 +158,18 @@ class WordGuessingGame {
     this.GUESSES_LEFT.innerHTML = this.guessesLeft;
     this.LETTERS_GUEST.innerHTML = this.lettersGuest;
     this.LETTERS_GUEST_COUNT.innerHTML = this.lettersGuest.length;
-    this.TOTAL_ROUNDS.innerHTML = (+this.wins + +this.losses) + " of " + (+this.words.length + +this.previousWords.length + +1);
+    this.TOTAL_ROUNDS.innerHTML = "Round " + (+this.wins + +this.losses) + " of " + (+this.words.length + +this.previousWords.length + +1);
     this.PROGRESS_BARS.querySelector(".bg-success").innerHTML = (((+this.wins)/(+this.words.length + +this.previousWords.length + +1))*100).toFixed(0) + "%";
     this.PROGRESS_BARS.querySelector(".bg-success").style.width = (((+this.wins)/(+this.words.length + +this.previousWords.length + +1))*100).toFixed(0) + "%";
     this.PROGRESS_BARS.querySelector(".bg-danger").innerHTML = (((+this.losses)/(+this.words.length + +this.previousWords.length + +1))*100).toFixed(0) + "%";
     this.PROGRESS_BARS.querySelector(".bg-danger").style.width = (((+this.losses)/(+this.words.length + +this.previousWords.length + +1))*100).toFixed(0) + "%";
-    
-
-    console.log("Current", this.words);
-    console.log("Previous",this.previousWords);
   } // END setRandomWord()
 
   resetGame(){
-    console.log("Reset Game Called!");
     this.alert(); // Reset Alert
-
-    // var filteredCorrectLetters = this.the_word.filter(function(v){ return v != "_" });
-    // console.log("Guesses LEFT",);
-    // console.log(this.lettersGuest.length + " + " + filteredCorrectLetters.length);
-
     this.guessesLeft = this.lettersGuest.length + this.guessesLeft;
     
-    this.words = this.words.concat(this.previousWords);    
-    console.log("Guesses Left", this.guessesLeft);
-    console.log("WordObject", this.words);
+    this.words = this.words.concat(this.previousWords);
     
     this.previousWords = []; // Words already played        
     this.lettersGuest = []
@@ -194,20 +183,17 @@ class WordGuessingGame {
   } // END resetGame()
 
   resetWord(response=false){
-    console.log("resetWord Called");
     this.previousWords.push(this.currentWordObject);
     
     // Check if game is over or if we can move on to the next round.
-    if(this.words.length === 0){ //} && (this.wins > 0 || this.losses > 0) ){
+    if(this.words.length === 0){
       return true;
     }
     
-    // var filteredCorrectLetters = this.the_word.filter(function(v){ return v != "_" });
     this.guessesLeft = this.lettersGuest.length + this.guessesLeft + this.surrenderedGuesses;
     this.lettersGuest = [];
 
     this.setRandomWord();
-    // console.log(this.lettersGuest.length + " + " + filteredCorrectLetters.length);
     return response;
   }
 
@@ -241,7 +227,6 @@ class WordGuessingGame {
         thatWord[i] = letter;
       });
 
-      // this.the_word[foundAt] = letter;
       this.the_word = thatWord;
       this.WORD.innerHTML = this.the_word.join(" ");
 
@@ -263,23 +248,18 @@ class WordGuessingGame {
   } // END isThere
 
   alert(message="", addThisClass=""){
-    console.log("alert",message);
-
     if(message === "" && addThisClass === ""){ // RESET Alert Message
       if(this.alertMessage.className !== "alert"){
         this.alertMessage.className = "";
         this.alertMessage.classList.add("alert");
         this.alertMessage.innerHTML = "";
       }
-
-      console.log("alert1");
       return;
       
     }else if(message !== "" && addThisClass === ""){
       this.alertMessage.className = "";
       this.alertMessage.classList.add("alert");
       addThisClass = "alert-info";
-      console.log("alert2");
     }
     
     this.alertMessage.classList.add(addThisClass);
@@ -288,8 +268,6 @@ class WordGuessingGame {
   } // END alert
 
   confirm(message,response=true){
-    console.log("confirm",message);
-
     if(response){ // Return Boolean of the users response
       return window.confirm(message);
 
@@ -310,16 +288,12 @@ class WordGuessingGame {
   } // END imageExists
 
   checkWinCondition(){
-    console.log("win condition called");
-    console.log(this.the_word.toString());
-    console.log(this.currentWordLetters.toString());
-    console.log("___Wins: " + this.wins + " Losses: " + this.losses);
 
     // WIN or LOSE?
     if(this.the_word.toString() === this.currentWordLetters.toString() || this.guessesLeft === 0){
       var WinOrLose_message = "You Lose!";
       var winOrLose_alert = "alert-danger";
-
+      
       // WIN Condition
       if(this.the_word.toString() === this.currentWordLetters.toString()) { 
         this.wins++;
@@ -332,9 +306,14 @@ class WordGuessingGame {
         this.LOSSES.innerHTML = this.losses;
       }
 
+      // Show Image and play sound
+      var sound = document.getElementById(this.currentWordObject.word.toString());
+      this.playSound(sound);
+
       // GAME OVER or not ?
       if(this.resetWord()){
         // GAME OVER!
+
         var play_again = this.confirm(WinOrLose_message + " Game Over! Do you want to play again?");
         if(play_again){
           this.resetGame();
@@ -351,11 +330,9 @@ class WordGuessingGame {
     return;
   } // END checkWinCondition
 
-  toggleHint(el="") {
-    // console.log("THIS--->",this.isElement(el));
-
+  toggleHint(el="",show=false) {
     // Check Image Visibility 
-    if(this.WORD_IMG.offsetParent === null){
+    if(this.WORD_IMG.offsetParent === null || show){
       this.WORD_IMG.style.display = "block";
       if(this.isElement(el)){ el.parentElement.classList.add("active"); }
     }else{
@@ -408,163 +385,207 @@ class WordGuessingGame {
 
     return;
   } // END newGame()
-  
+
+  /**
+   * delayAction
+   * @param seconds 
+   * @param callBack 
+   * @param response
+   * 
+   * Example usage,
+   * var something_magic = function() { alert("this message takes 3seconds to load"); }
+   * this.delayAction(3, something_magic);
+   */
+  delayAction(seconds,callBack,response=false) {
+    var timeoutID;
+
+    // Runs callBack function after x seconds
+    if(typeof callBack === 'function'){
+      timeoutID = window.setTimeout(callBack, seconds*1000);
+      if(response){ return timeoutID; }
+    }else{ 
+      console.log("That's not going to work: ", typeof callBack);
+    }
+
+    return;
+  }; // delayAction
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async playSound(s){
+    var bg = document.getElementById("Home").style.background;
+    var image_url = this.currentWordObject.image;
+    var secret_word = document.createElement("h1");
+
+    secret_word.setAttribute("id","secret_word");
+    secret_word.setAttribute("class","text-center");
+    document.getElementById("main-section").insertAdjacentElement('beforebegin', secret_word);
+    document.getElementById("secret_word").innerHTML = this.currentWordObject.word;
+
+    document.getElementById("Home").style.background = "url('" + image_url + "') no-repeat center";
+    document.getElementById("Home").style.backgroundSize = "contain";
+    this.fadeOut(document.getElementById("main-section"));
+    
+    s.play();
+    await this.sleep(s.duration*1000);
+    
+    this.fadeIn(document.getElementById("main-section"),150);
+    document.getElementById("Home").style.background = bg;
+    document.getElementById("secret_word").remove();
+  }
+
+  fadeOut(element,ms=50) {
+    var op = 1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op <= 0.1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        op -= 0.1;
+    }, ms);
+  }
+
+  fadeIn(element,ms=50) {
+    var op = 0.1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        op += 0.1;
+    }, ms);
+  }
+
+  /**
+   * clearDelayedAction
+   * @param id 
+   */
+  clearDelayedAction(id){
+    return window.clearTimeout(id);
+  }
+
+  addAudio(){
+    var audioElement;
+    var thatParent = this.AUDIO_FILES;
+    this.words.forEach(function(el){
+      audioElement = document.createElement("audio");
+      audioElement.setAttribute("id",el.word);
+      audioElement.setAttribute("src",el.sound);
+      thatParent.appendChild(audioElement);
+    });
+
+    return;
+  }
 }
-
-/*===============[ 2.0 Frontend]====================*/
-/* 2.1 Create Game Object
-/*--------------------------------------------------*/
-const ThisGame = new WordGuessingGame();
-
-if (!window['GAME']) {
-  window['GAME'] = ThisGame;
-}
-
-/* 2.2 Listen For KeyUp Events
-/*--------------------------------------------------*/
-document.onkeyup = function (event) {
-  var key_pressed = event.key.toLowerCase();
-  ThisGame.isThere(key_pressed);
-  return;
-}
-
-console.log("===============================");
-// console.log(ThisGame.words);
-// console.log(ThisGame.guessesLeft);
-// console.log(ThisGame.randomWord());
-// console.log(ThisGame.current_word);
-console.log("===============================");
 
 /*===============[ A.0 Archived ]===================*/
-// const game1 = new WordGuessingGame(letters,10);
-// console.log(game1.words);
-// console.log(game1.guessesLeft);
+/*
+var BreakException = {};
+try{
+  some_words.forEach(function(element){
+    if(!Array.isArray(element)){
+      console.log("NOT THIS TIME");
+      throw BreakException;
+    }
 
-// var BreakException = {};
-// try{
-//   some_words.forEach(function(element){
-//     // console.log(Array.isArray(element));
+  });
+}catch(e){
+  if( e !== BreakException ) throw e;
+}
 
-//     if(!Array.isArray(element)){
-//       console.log("NOT THIS TIME");
-//       throw BreakException;
-//     }
+class something_cool {
 
-//   });
-// }catch(e){
-//   if( e !== BreakException ) throw e;
-// }
+  constructor(){
+    this.parameters = arguments.length;
+    this.stuff = arguments;
 
-// class something_cool {
+    var pre_tiers = [];    // Sets
+    var parent_array = []; // array per set
 
-//   constructor(){
-//     this.parameters = arguments.length;
-//     this.stuff = arguments;
+    for(var i=0; i < arguments.length; i++){
 
-//     var pre_tiers = [];    // Sets
-//     var parent_array = []; // array per set
+      if(Array.isArray(arguments[i])){
+        console.log("ARRAY DETECTED");
 
-//     for(var i=0; i < arguments.length; i++){
+        if(this.is_multi_array(arguments[i]) ){
+          console.log("MULTI ARRAY DETECTED");
 
-//       if(Array.isArray(arguments[i])){
-//         console.log("ARRAY DETECTED");
+          arguments[i].forEach(function(el){
+            console.log(el);
+          });      
 
-//         if(this.is_multi_array(arguments[i]) ){
-//           console.log("MULTI ARRAY DETECTED");
+        }else if(Object.prototype.toString.call(arguments[i])){
+          console.log("OBJECT DETECTED");
 
-//           arguments[i].forEach(function(el){
-//             console.log(el);
-//           });      
+          for(const [key, value] of Object.entries(arguments[i])){
+            console.log(key, value);
+          }
 
-//         }else if(Object.prototype.toString.call(arguments[i])){
-//           console.log("OBJECT DETECTED");
+        }else{
+          parent_array = parent_array.concat(arguments[i]);
+          console.log("yo",parent_array);
+        } 
 
-//           for(const [key, value] of Object.entries(arguments[i])){
-//             console.log(key, value);
-//           }
+      }else if(! isNaN(arguments[i]) ){
+        console.log("NUMBER DETECTED", arguments[i]);
+        parent_array['number'] = arguments[i];
+        console.log("foo",parent_array);
+      }
 
-//         }else{
-//           parent_array = parent_array.concat(arguments[i]);
-//           console.log("yo",parent_array);
-//         } 
+      if(i%2 == 0 ){ // NEW TIER SET...EVERY 2s
+        pre_tiers.concat(parent_array);
+        console.log("PRE THIS",pre_tiers);
+        parent_array = []; // RESET ARRAY
+      }
+    } // END for Loop on Arguments
+    console.log("PRE TIERS");
+    console.log(pre_tiers);
+    pre_tiers.forEach(function(ti) {
+      console.log(ti);
+    });
 
-//       }else if(! isNaN(arguments[i]) ){
-//         console.log("NUMBER DETECTED", arguments[i]);
-//         parent_array['number'] = arguments[i];
-//         console.log("foo",parent_array);
-//       }
+  } // END constructor
 
-//       if(i%2 == 0 ){ // NEW TIER SET...EVERY 2s
-//         pre_tiers.concat(parent_array);
-//         console.log("PRE THIS",pre_tiers);
-//         parent_array = []; // RESET ARRAY
-//       }
-//     } // END for Loop on Arguments
-//     console.log("PRE TIERS");
-//     console.log(pre_tiers);
-//     pre_tiers.forEach(function(ti) {
-//       console.log(ti);
-//     });
+  is_multi_array(some_array=[],mode="every_key"){
+    var result = false;
 
-//   } // END constructor
+    if(Array.isArray(some_array)){
+      if(mode=="first_key_only"){
 
-//   is_multi_array(some_array=[],mode="every_key"){
-//     var result = false;
+      }else if(mode=="every_key"){
+        result = true;
 
-//     if(Array.isArray(some_array)){
-//       if(mode=="first_key_only"){
+        var BreakException = {};
+        try{
+          some_array.forEach(function(element){
+            console.log("TYPE:", typeof element);
 
-//       }else if(mode=="every_key"){
-//         result = true;
+            if(!Array.isArray(element)){
 
-//         var BreakException = {};
-//         try{
-//           some_array.forEach(function(element){
-//             console.log("TYPE:", typeof element);
+              result = false;
+              throw BreakException;
 
-//             if(!Array.isArray(element)){
+            } // IF NOT ARRAY
 
-//               result = false;
-//               throw BreakException;
+          });
+        }catch(e){
+          if( e !== BreakException ) throw e;
+        }
 
-//             } // IF NOT ARRAY
+      }else if(mode=="at_least_one_key"){
 
-//           });
-//         }catch(e){
-//           if( e !== BreakException ) throw e;
-//         }
+      } 
+    } // END isArray
 
-//       }else if(mode=="at_least_one_key"){
+    return result;
+  } // END is_multi_array
 
-//       } 
-//     } // END isArray
+}
 
-//     return result;
-//   } // END is_multi_array
-
-// }
-
-// var cool = new something_cool(some_words, 11, letters, 99); 
-// var cool = new something_cool(some_words, 99); 
-// console.log("parameters", cool.parameters);
-// console.log("stuff",cool.stuff);
-
-// var pre_tiers = [];
-// pre_tiers['number'] = '5';
-// console.log("before pre",pre_tiers);
-
-
-// var parent_array = []; // array per set
-// parent_array['number'] = 55;
-// console.log("parent",parent_array);
-
-// // pre_tiers.concat(parent_array);
-// pre_tiers.push(parent_array['number']);
-
-// // for (var i=0, l=array.length; i<l; i++){
-// //   if (array[i] instanceof Array){
-// //       array[i] = array[i].join("`");
-// //   }
-// // }
-
-// console.log("after pre",pre_tiers);
+var cool = new something_cool(some_words, 11, letters, 99); 
+var cool = new something_cool(some_words, 99); 
+console.log("parameters", cool.parameters);
+console.log("stuff",cool.stuff);
+*/
