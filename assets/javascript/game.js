@@ -3,7 +3,7 @@
  * 
  * @package Word Guess Game
  * @author Christopher Collins
- * @version 1.1.1
+ * @version 1.3
  * @license none (public domain)
  * 
  * ===============[ TABLE OF CONTENTS ]===============
@@ -12,7 +12,8 @@
  *   1.2 WordGuessingGame Class Declaration
  * 
  * 2.0 Frontend
- *   2.1
+ *   2.1 Create Game Object
+ *   2.2 Listen For KeyUp Events
  * 
  * A.0 Archived
  * 
@@ -27,72 +28,72 @@
 class WordGuessingGame {
   // Private Variables
   #defaultWords = [{
-      "word": "ace",
-      "image": "image_file1.png",
+      "word": "hondacrv",
+      "image": "assets/images/cars/honda-cr-v-background.jpg",
       "sound": "sound_file1.png",
     },
-    // {
-    //   "word": "two",
-    //   "image": "image_file2.png",
-    //   "sound": "sound_file2.png",
-    // },
-    // {
-    //   "word": "three",
-    //   "image": "image_file3.png",
-    //   "sound": "sound_file3.png",
-    // },
-    // {
-    //   "word": "four",
-    //   "image": "image_file4.png",
-    //   "sound": "sound_file4.png",
-    // },
-    // {
-    //   "word": "five",
-    //   "image": "image_file5.png",
-    //   "sound": "sound_file5.png",
-    // },
-    // {
-    //   "word": "six",
-    //   "image": "image_file6.png",
-    //   "sound": "sound_file6.png",
-    // },
-    // {
-    //   "word": "seven",
-    //   "image": "image_file7.png",
-    //   "sound": "sound_file7.png",
-    // },
-    // {
-    //   "word": "eight",
-    //   "image": "image_file8.png",
-    //   "sound": "sound_file8.png",
-    // },
-    // {
-    //   "word": "nine",
-    //   "image": "image_file9.png",
-    //   "sound": "sound_file9.png",
-    // },
-    // {
-    //   "word": "ten",
-    //   "image": "image_file10.png",
-    //   "sound": "sound_file10.png",
-    // }, {
-    //   "word": "jack",
-    //   "image": "image_file11.png",
-    //   "sound": "sound_file11.png",
-    // }, {
-    //   "word": "queen",
-    //   "image": "image_file12.png",
-    //   "sound": "sound_file12.png",
-    // }, {
-    //   "word": "king",
-    //   "image": "image_file13.png",
-    //   "sound": "sound_file13.png",
-    // },
+    {
+      "word": "toyotarav4",
+      "image": "assets/images/cars/2019-Toyota-RAV4-feature_o.jpg",
+      "sound": "sound_file2.png",
+    },
+    {
+      "word": "hondacivic",
+      "image": "assets/images/cars/Honda-Civic-PNG-Pic.png",
+      "sound": "sound_file3.png",
+    },
+    {
+      "word": "toyotahighlander",
+      "image": "assets/images/cars/2018-Toyota-Highlander-model.png",
+      "sound": "sound_file4.png",
+    },
+    {
+      "word": "mazdacx5",
+      "image": "assets/images/cars/2018-mazda-cx-5-Eternal-Blue-Mica.png",
+      "sound": "sound_file5.png",
+    },
+    {
+      "word": "hondaaccord",
+      "image": "assets/images/cars/2018-Honda-Accord-COLOR-Platinum-White.png",
+      "sound": "sound_file6.png",
+    },
+    {
+      "word": "dodgeram1500",
+      "image": "assets/images/cars/Dodge-Ram-1500.png",
+      "sound": "sound_file7.png",
+    },
+    {
+      "word": "chevroletequinox",
+      "image": "assets/images/cars/chevy_equinox2019_black.png",
+      "sound": "sound_file8.png",
+    },
+    {
+      "word": "kiatelluride",
+      "image": "assets/images/cars/2020-kia-telluride.jpg",
+      "sound": "sound_file9.png",
+    },
+    {
+      "word": "chevrolettraverse",
+      "image": "assets/images/cars/2018-Chevrolet-Traverse-Header.png",
+      "sound": "sound_file10.png",
+    }, {
+      "word": "toyotatacoma",
+      "image": "assets/images/cars/2018-toyota-tacoma-in-white.png",
+      "sound": "sound_file11.png",
+    }, {
+      "word": "jeepwrangler",
+      "image": "assets/images/cars/jeep-wrangler.png",
+      "sound": "sound_file12.png",
+    }, {
+      "word": "hondapilot",
+      "image": "assets/images/cars/2019-Honda-Pilot-LX-Hero.png",
+      "sound": "sound_file13.png",
+    },
   ];
 
-  #defaultCategory = "Trivia";
+  #defaultCategory = "Cars Trivia";
   #defaultGuesses = 9;
-  validKeys = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+  validKeys = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
   // Game Properties
   words = []; 
@@ -130,6 +131,9 @@ class WordGuessingGame {
     
     this.currentWordObject = this.words[index];
     this.currentWordLetters = this.currentWordObject.word.split("");
+
+    // Removes the current_word from the list of words so it can't be selected again.
+    this.words.splice(index, 1);
     
     console.log("Current Word: "+ this.currentWordObject.word);
     console.log(this.currentWordLetters);
@@ -139,19 +143,14 @@ class WordGuessingGame {
       this.the_word.push("_");
     }
     
-    // Set DOM Elements
+    // Set DOM Elements for the round
     this.WORD.innerHTML = this.the_word.join(" ");
     this.WORD_LEN.innerHTML = this.currentWordObject.word.length;
     this.WORD_IMG.src = (this.imageExists(this.currentWordObject.image)) ? this.currentWordObject.image : this.WORD_IMG.src;
     this.WORD_CAT.innerHTML = this.wordCategory;
-
-    // Round Elements
     this.GUESSES_LEFT.innerHTML = this.guessesLeft;
     this.LETTERS_GUEST.innerHTML = this.lettersGuest;
     this.LETTERS_GUEST_COUNT.innerHTML = this.lettersGuest.length;
-
-    // Removes the current_word from the list of words so it can't be selected again.
-    this.words.splice(index, 1);
 
     console.log("Current", this.words);
     console.log("Previous",this.previousWords);
@@ -159,9 +158,12 @@ class WordGuessingGame {
 
   resetGame(){
     console.log("Reset Game Called!");
+    this.alert(); // Reset Alert
+
     // var filteredCorrectLetters = this.the_word.filter(function(v){ return v != "_" });
     // console.log("Guesses LEFT",);
     // console.log(this.lettersGuest.length + " + " + filteredCorrectLetters.length);
+
     this.guessesLeft = this.lettersGuest.length + this.guessesLeft;
     
     this.words = this.words.concat(this.previousWords);    
@@ -201,7 +203,7 @@ class WordGuessingGame {
     var found = false;
     var foundAt = [];
 
-    this.alert();
+    this.alert(); // Reset Alert
  
     if(this.validKeys.indexOf(letter) === -1){
       var message = "'" + letter + "' is not a valid letter.";
@@ -250,7 +252,8 @@ class WordGuessingGame {
 
   alert(message="", addThisClass=""){
     console.log("alert",message);
-    if(message === "" && addThisClass === ""){
+
+    if(message === "" && addThisClass === ""){ // RESET Alert Message
       if(this.alertMessage.className !== "alert"){
         this.alertMessage.className = "";
         this.alertMessage.classList.add("alert");
@@ -274,11 +277,14 @@ class WordGuessingGame {
 
   confirm(message,response=true){
     console.log("confirm",message);
-    if(response){
+
+    if(response){ // Return Boolean of the users response
       return window.confirm(message);
-    }else{
+
+    }else{ // Don't care for a response so alert the message. 
       this.alert(message);
     }
+
     return;
   } // END confirm
   
@@ -297,119 +303,66 @@ class WordGuessingGame {
     console.log(this.currentWordLetters.toString());
     console.log("___Wins: " + this.wins + " Losses: " + this.losses);
 
-    if(this.the_word.toString() === this.currentWordLetters.toString()){
-      this.wins++;
+    // WIN or LOSE?
+    if(this.the_word.toString() === this.currentWordLetters.toString() || this.guessesLeft === 0){
+      var WinOrLose_message = "You Lose!";
+      var winOrLose_alert = "alert-danger";
 
-      if(this.resetWord()){ // GAME OVER
+      // WIN Condition
+      if(this.the_word.toString() === this.currentWordLetters.toString()) { 
+        this.wins++;
+        WinOrLose_message = "You Win!";
+        winOrLose_alert = "alert-success";
+
+      }else if (this.guessesLeft === 0) {  // LOSE Condition
+        this.losses++;
+      }
+
+      // GAME OVER or not ?
+      if(this.resetWord()){
+        // GAME OVER!
         
-        var play_again = this.confirm("Game Over! Do you want to play again?");
+        var play_again = this.confirm(WinOrLose_message + " Game Over! Do you want to play again?");
         if(play_again){
           this.resetGame();
         }else{
           this.alert("Wins: " + this.wins + " Losses: " + this.losses + "<br />Ok Bye!", "alert-success");
         }
 
-      }else{
-        this.alert("You Win!","alert-success");
-      }
-      
-    }else if (this.guessesLeft === 0){
-      this.losses++;
-      this.resetWord();
-      this.alert("You Lose!","alert-danger");
-    }
+      }else{ // GAME is not over so coninue to the next round...which already happened from if(this.resetWord())
+        this.alert(WinOrLose_message, winOrLose_alert);
+
+      } // END GAME OVER or not Condtion
+    } // END WIN or LOSE Conditions
     
     return;
   } // END checkWinCondition
 }
 
 /*===============[ 2.0 Frontend]====================*/
-/* 2.1 
+/* 2.1 Create Game Object
 /*--------------------------------------------------*/
-var some_words = [{
-    "word": "ace",
-    "image": "image_file1.png",
-    "sound": "sound_file1.png",
-  },
-  {
-    "word": "two",
-    "image": "image_file2.png",
-    "sound": "sound_file2.png",
-  },
-  {
-    "word": "three",
-    "image": "image_file3.png",
-    "sound": "sound_file3.png",
-  },
-  {
-    "word": "four",
-    "image": "image_file4.png",
-    "sound": "sound_file4.png",
-  },
-  {
-    "word": "five",
-    "image": "image_file5.png",
-    "sound": "sound_file5.png",
-  },
-  {
-    "word": "six",
-    "image": "image_file6.png",
-    "sound": "sound_file6.png",
-  },
-  {
-    "word": "seven",
-    "image": "image_file7.png",
-    "sound": "sound_file7.png",
-  },
-  {
-    "word": "eight",
-    "image": "image_file8.png",
-    "sound": "sound_file8.png",
-  },
-  {
-    "word": "nine",
-    "image": "image_file9.png",
-    "sound": "sound_file9.png",
-  },
-  {
-    "word": "ten",
-    "image": "image_file10.png",
-    "sound": "sound_file10.png",
-  }, {
-    "word": "jack",
-    "image": "image_file11.png",
-    "sound": "sound_file11.png",
-  }, {
-    "word": "queen",
-    "image": "image_file12.png",
-    "sound": "sound_file12.png",
-  }, {
-    "word": "king",
-    "image": "image_file13.png",
-    "sound": "sound_file13.png",
-  },
-];
-
-// const game1 = new WordGuessingGame(letters,10);
-
-// console.log(game1.words);
-// console.log(game1.guessesLeft);
-console.log("===============================");
 const ThisGame = new WordGuessingGame();
 
+/* 2.2 Listen For KeyUp Events
+/*--------------------------------------------------*/
 document.onkeyup = function (event) {
   var key_pressed = event.key.toLowerCase();
   ThisGame.isThere(key_pressed);
   return;
 }
 
-// console.log(game2.words);
-// console.log(game2.guessesLeft);
-// console.log(game2.randomWord());
-// console.log(game2.current_word);
+console.log("===============================");
+// console.log(ThisGame.words);
+// console.log(ThisGame.guessesLeft);
+// console.log(ThisGame.randomWord());
+// console.log(ThisGame.current_word);
 console.log("===============================");
 
 /*===============[ A.0 Archived ]===================*/
+// const game1 = new WordGuessingGame(letters,10);
+// console.log(game1.words);
+// console.log(game1.guessesLeft);
 
 // var BreakException = {};
 // try{

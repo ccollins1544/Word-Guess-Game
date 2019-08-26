@@ -80,22 +80,20 @@ body.page-template {
 }
 
 article#main-container {
-  margin-top: 40px;
+  margin-top: 22px;
 }
 
 /** STICKY FOOTER
-* header 63px + main-container margin 40px + section margin 50px + footer 83px = 236px
+* header 63px + margin 22px + section margin 50px + footer 83px = 218px
 */
 #main-container.content-wrapper {
-  min-height: calc(100vh - 236px);
+  min-height: calc(100vh - 218px);
 }
 
 section#main-section {
   border-radius: 5px;
   padding: 1rem 2rem !important;
   margin-bottom: 50px;
-  border-color: var(--primary-menu-background);
-  box-shadow: 0px 12px 18px -6px var(--primary-menu-background);
 }
 
 .container-fluid {
@@ -113,13 +111,14 @@ section#main-section {
 }
 
 .first-row {
+  padding-top: 25px;
   padding-bottom: 0px;
 }
 
 section.section-block {
   margin: 0 auto;
   max-width: 980px;
-  background-color: #fff;
+  background-color: transparent;
 }
 
 
@@ -128,7 +127,9 @@ li {
 }
 
 hr {
-  border: solid 1px var(--body-text);
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: solid 1px var(--primary-menu-background);
 }
 
 /*------------------------------------------------------*/
@@ -257,6 +258,10 @@ hr {
 /*------------------------------------------------------*/
 /* 3.1 Game Layout
 /*------------------------------------------------------*/
+#word_category {
+  margin-bottom: 0px;
+}
+
 #game_stats {
   max-width: 415px;
 }
@@ -270,9 +275,36 @@ hr {
   border-top-color: transparent !important;
 }
 
-/* #alert_message {
+#alert_message {
+  text-align: center;
+}
+
+#current_word_image {
+  margin-top: 5px;
+  border-color: var(--primary-menu-background);
+  background-color: var(--body-text);
+  box-shadow: 0px 12px 18px -6px var(--primary-menu-background);
+}
+
+#game_progress.progress {
+  position: absolute;
+  left: 0px;
+  top: 75px;
+  width: 100%;
+  background-color: rgba(82, 97, 107, 0.5);
+}
+
+#total_wins {
+  color: #28a745;
+}
+
+#total_losses {
   color: var(--cool-red);
-} */
+}
+
+.bg-danger {
+  background-color: var(--cool-red) !important;
+}
 
 
 /*------------------------------------------------------*/
@@ -582,10 +614,10 @@ hr {
   }
 
   /** STICKY FOOTER
-   * header 56px + main-container margin 40px + section margin 50px + footer 83px = 229px
+   * header 56px + margin 22px + section margin 50px + footer 83px = 211px
    */
   #main-container.content-wrapper {
-    min-height: calc(100vh - 229px);
+    min-height: calc(100vh - 211px);
   }
 }
 
@@ -619,9 +651,9 @@ hr {
   }
 
   /** STICKY FOOTER
-   * header 56px + main-container margin 40px + section margin 50px + footer 108px = 254px
+   * header 56px + margin 22px + section margin 50px + footer 108px = 236px
    */
   #main-container.content-wrapper {
-    min-height: calc(100vh - 254px);
+    min-height: calc(100vh - 236px);
   }
 }
