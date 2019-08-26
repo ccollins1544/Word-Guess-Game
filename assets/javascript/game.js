@@ -412,6 +412,7 @@ class WordGuessingGame {
     
     document.getElementById("Home").style.background = "url('" + image_url + "') no-repeat center";
     document.getElementById("Home").style.backgroundSize = "contain";
+    document.getElementById("Home").style.backgroundPosition = "top 90px left 50%";
     this.fadeOut(document.getElementById("main-section"));
     
     // Limit Sounds at 7seconds minimum and 20seconds tops.
