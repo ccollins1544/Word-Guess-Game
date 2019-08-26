@@ -1,7 +1,7 @@
 /**
  * MAIN CSS
  * Author:  Christopher Collins
- * Version: 1.1.1
+ * Version: 2.0
  * License: none (public domain)
  */
 /*------------------------------------------------------
@@ -68,13 +68,15 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Ubuntu";
-  font-weight: 900;
+  /* font-family: "Ubuntu"; */
+  /* font-weight: 900; */
+  font-family: 'Press Start 2P', cursive;
   color: var(--accent-text);
 }
 
 body.page-template {
-  font-family: "Ubuntu";
+  /* font-family: "Ubuntu"; */
+  font-family: 'Press Start 2P', cursive;
   color: var(--body-text);
   background: url('../images/black_paper_800x800.png')
 }
@@ -152,6 +154,11 @@ hr {
 #mobile-nav .navbar-nav .nav-link {
   font-size: 1.3em;
   color: rgba(255, 255, 255, .5);
+}
+
+#main-nav .nav-item:nth-child(2){
+  border-left: solid 1px rgba(255, 255, 255, .5);
+  border-right: solid 1px rgba(255, 255, 255, .5);
 }
 
 /* Active Nav Link */
@@ -263,7 +270,7 @@ hr {
 }
 
 #game_stats {
-  max-width: 415px;
+  max-width: 768px;
 }
 
 #game_stats .badge {
@@ -288,6 +295,7 @@ hr {
 }
 
 #game_progress.progress {
+  font-family: "Ubuntu";
   position: absolute;
   left: 0px;
   top: 75px;

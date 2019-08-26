@@ -1,26 +1,12 @@
 /**
  * Game JS
- * 
  * @package Word Guess Game
+ * @subpackage WordGuessingGame Class
  * @author Christopher Collins
  * @version 2.0
  * @license none (public domain)
  * 
- * ===============[ TABLE OF CONTENTS ]===============
- * 1.0 Backend
- *   1.1 Initalize Variables
- *   1.2 WordGuessingGame Class Declaration
- * 
- * A.0 Archived
- * 
  *****************************************************/
-/*===============[ 1.0 Backend ]====================*/
-/* 1.1 Initialize Variables
-/*--------------------------------------------------*/
-
-/**
- * 1.2 WordGuessingGame Class Declaration
- */
 class WordGuessingGame {
   // Private Variables
   #defaultWords = [{
@@ -88,7 +74,7 @@ class WordGuessingGame {
   ];
 
   #defaultCategory = "Cars Trivia";
-  #defaultGuesses = 9;
+  #defaultGuesses = 7;
   validKeys = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
   // Game Properties
@@ -172,7 +158,7 @@ class WordGuessingGame {
     this.words = this.words.concat(this.previousWords);
     
     this.previousWords = []; // Words already played        
-    this.lettersGuest = []
+    this.lettersGuest = [];
     this.currentWordLetters = []; 
     this.currentWordObject = {};
     this.the_word = []; // This represents the letters guessed and blanks "_"  
@@ -478,114 +464,4 @@ class WordGuessingGame {
 
     return;
   }
-}
-
-/*===============[ A.0 Archived ]===================*/
-/*
-var BreakException = {};
-try{
-  some_words.forEach(function(element){
-    if(!Array.isArray(element)){
-      console.log("NOT THIS TIME");
-      throw BreakException;
-    }
-
-  });
-}catch(e){
-  if( e !== BreakException ) throw e;
-}
-
-class something_cool {
-
-  constructor(){
-    this.parameters = arguments.length;
-    this.stuff = arguments;
-
-    var pre_tiers = [];    // Sets
-    var parent_array = []; // array per set
-
-    for(var i=0; i < arguments.length; i++){
-
-      if(Array.isArray(arguments[i])){
-        console.log("ARRAY DETECTED");
-
-        if(this.is_multi_array(arguments[i]) ){
-          console.log("MULTI ARRAY DETECTED");
-
-          arguments[i].forEach(function(el){
-            console.log(el);
-          });      
-
-        }else if(Object.prototype.toString.call(arguments[i])){
-          console.log("OBJECT DETECTED");
-
-          for(const [key, value] of Object.entries(arguments[i])){
-            console.log(key, value);
-          }
-
-        }else{
-          parent_array = parent_array.concat(arguments[i]);
-          console.log("yo",parent_array);
-        } 
-
-      }else if(! isNaN(arguments[i]) ){
-        console.log("NUMBER DETECTED", arguments[i]);
-        parent_array['number'] = arguments[i];
-        console.log("foo",parent_array);
-      }
-
-      if(i%2 == 0 ){ // NEW TIER SET...EVERY 2s
-        pre_tiers.concat(parent_array);
-        console.log("PRE THIS",pre_tiers);
-        parent_array = []; // RESET ARRAY
-      }
-    } // END for Loop on Arguments
-    console.log("PRE TIERS");
-    console.log(pre_tiers);
-    pre_tiers.forEach(function(ti) {
-      console.log(ti);
-    });
-
-  } // END constructor
-
-  is_multi_array(some_array=[],mode="every_key"){
-    var result = false;
-
-    if(Array.isArray(some_array)){
-      if(mode=="first_key_only"){
-
-      }else if(mode=="every_key"){
-        result = true;
-
-        var BreakException = {};
-        try{
-          some_array.forEach(function(element){
-            console.log("TYPE:", typeof element);
-
-            if(!Array.isArray(element)){
-
-              result = false;
-              throw BreakException;
-
-            } // IF NOT ARRAY
-
-          });
-        }catch(e){
-          if( e !== BreakException ) throw e;
-        }
-
-      }else if(mode=="at_least_one_key"){
-
-      } 
-    } // END isArray
-
-    return result;
-  } // END is_multi_array
-
-}
-
-var cool = new something_cool(some_words, 11, letters, 99); 
-var cool = new something_cool(some_words, 99); 
-console.log("parameters", cool.parameters);
-console.log("stuff",cool.stuff);
-*/
+} // END WordGuessingGame Class
