@@ -1,4 +1,5 @@
-super_heros = [{
+super_heros = [
+{
   "word": "thehulk",
   "image": "assets/images/superheros/hulk.png",
   "sound": "assets/sounds/superheros/Hulk-Roar-2-[Sound-Effect].mp3",
