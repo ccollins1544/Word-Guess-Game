@@ -84,16 +84,16 @@ article#main-container {
 }
 
 /** STICKY FOOTER
-* header 63px + margin 22px + section margin 50px + footer 83px = 218px
+* header 63px + margin 22px + footer 83px = 168px
 */
 #main-container.content-wrapper {
-  min-height: calc(100vh - 218px);
+  min-height: calc(100vh - 168px);
 }
 
 section#main-section {
   border-radius: 5px;
   padding: 1rem 2rem !important;
-  margin-bottom: 50px;
+  margin-bottom: 0px;
 }
 
 .container-fluid {
@@ -614,10 +614,10 @@ hr {
   }
 
   /** STICKY FOOTER
-   * header 56px + margin 22px + section margin 50px + footer 83px = 211px
+   * header 56px + margin 22px + footer 83px = 161px
    */
   #main-container.content-wrapper {
-    min-height: calc(100vh - 211px);
+    min-height: calc(100vh - 161px);
   }
 }
 
@@ -651,9 +651,9 @@ hr {
   }
 
   /** STICKY FOOTER
-   * header 56px + margin 22px + section margin 50px + footer 108px = 236px
+   * header 56px + margin 22px + footer 108px = 866px
    */
   #main-container.content-wrapper {
-    min-height: calc(100vh - 236px);
+    min-height: calc(100vh - 186px);
   }
 }
