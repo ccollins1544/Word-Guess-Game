@@ -12,64 +12,64 @@ class WordGuessingGame {
   #defaultWords = [{
       "word": "hondacrv",
       "image": "assets/images/cars/honda-cr-v-background.jpg",
-      "sound": "assets/sounds/RaceCarEngineTrouble.mp3",
+      "sound": "assets/sounds/cars/RaceCarEngineTrouble.mp3",
     },
     {
       "word": "toyotarav4",
       "image": "assets/images/cars/2019-Toyota-RAV4-feature_o.jpg",
-      "sound": "assets/sounds/topfuelDragster.mp3",
+      "sound": "assets/sounds/cars/topfuelDragster.mp3",
     },
     {
       "word": "hondacivic",
       "image": "assets/images/cars/Honda-Civic-PNG-Pic.png",
-      "sound": "assets/sounds/CIVIC-passing-at-high-speed.mp3",
+      "sound": "assets/sounds/cars/CIVIC-passing-at-high-speed.mp3",
     },
     {
       "word": "toyotahighlander",
       "image": "assets/images/cars/2018-Toyota-Highlander-model.png",
-      "sound": "assets/sounds/StartCar.mp3",
+      "sound": "assets/sounds/cars/StartCar.mp3",
     },
     {
       "word": "mazdacx5",
       "image": "assets/images/cars/2018-mazda-cx-5-Eternal-Blue-Mica.png",
-      "sound": "assets/sounds/CAR-Peels-Out.mp3",
+      "sound": "assets/sounds/cars/CAR-Peels-Out.mp3",
     },
     {
       "word": "hondaaccord",
       "image": "assets/images/cars/2018-Honda-Accord-COLOR-Platinum-White.png",
-      "sound": "assets/sounds/RaceCareScreamBy.mp3",
+      "sound": "assets/sounds/cars/RaceCareScreamBy.mp3",
     },
     {
       "word": "dodgeram1500",
       "image": "assets/images/cars/Dodge-Ram-1500.png",
-      "sound": "assets/sounds/burnoutHotRod.mp3",
+      "sound": "assets/sounds/cars/burnoutHotRod.mp3",
     },
     {
       "word": "chevroletequinox",
       "image": "assets/images/cars/chevy_equinox2019_black.png",
-      "sound": "assets/sounds/Corvette-pass.mp3",
+      "sound": "assets/sounds/cars/Corvette-pass.mp3",
     },
     {
       "word": "kiatelluride",
       "image": "assets/images/cars/2020-kia-telluride.jpg",
-      "sound": "assets/sounds/Porsche2.mp3",
+      "sound": "assets/sounds/cars/Porsche2.mp3",
     },
     {
       "word": "chevrolettraverse",
       "image": "assets/images/cars/2018-Chevrolet-Traverse-Header.png",
-      "sound": "assets/sounds/RACECAR.mp3",
+      "sound": "assets/sounds/cars/RACECAR.mp3",
     }, {
       "word": "toyotatacoma",
       "image": "assets/images/cars/2018-toyota-tacoma-in-white.png",
-      "sound": "assets/sounds/car-running3.mp3",
+      "sound": "assets/sounds/cars/car-running3.mp3",
     }, {
       "word": "jeepwrangler",
       "image": "assets/images/cars/jeep-wrangler.png",
-      "sound": "assets/sounds/JEEP-HORN.mp3",
+      "sound": "assets/sounds/cars/JEEP-HORN.mp3",
     }, {
       "word": "hondapilot",
       "image": "assets/images/cars/2019-Honda-Pilot-LX-Hero.png",
-      "sound": "assets/sounds/BMW-DRIVEBY.mp3",
+      "sound": "assets/sounds/cars/BMW-DRIVEBY.mp3",
     },
   ];
 
@@ -404,18 +404,32 @@ class WordGuessingGame {
     var bg = document.getElementById("Home").style.background;
     var image_url = this.currentWordObject.image;
     var secret_word = document.createElement("h1");
-
+    
     secret_word.setAttribute("id","secret_word");
     secret_word.setAttribute("class","text-center");
     document.getElementById("main-section").insertAdjacentElement('beforebegin', secret_word);
     document.getElementById("secret_word").innerHTML = this.currentWordObject.word;
-
+    
     document.getElementById("Home").style.background = "url('" + image_url + "') no-repeat center";
     document.getElementById("Home").style.backgroundSize = "contain";
     this.fadeOut(document.getElementById("main-section"));
     
-    s.play();
-    await this.sleep(s.duration*1000);
+    // Limit Sounds at 7seconds minimum and 20seconds tops.
+    var duration = s.duration*1000;
+    if(duration>20000){ duration=20000; }else if(duration < 7000){ duration=7000; }
+    
+    if(s.duration < 7){ // play sound twice
+      s.play();
+      duration = duration - s.duration*1000;
+      await this.sleep(s.duration*1000);
+      s.play();
+
+    }else{ // play once
+      s.play();
+    }
+    
+    await this.sleep(duration);
+    s.pause();
     
     this.fadeIn(document.getElementById("main-section"),150);
     document.getElementById("Home").style.background = bg;
