@@ -421,8 +421,8 @@ class WordGuessingGame {
     
     if(s.duration < 7){ // play sound twice
       s.play();
-      duration = duration - s.duration*1000;
-      await this.sleep(s.duration*1000);
+      duration = duration - (s.duration*1000 + 1000);
+      await this.sleep(s.duration*1000 + 1000);
       s.play();
 
     }else{ // play once
