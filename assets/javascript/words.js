@@ -48,5 +48,55 @@ super_heros = [
   "word": "batman",
   "image": "assets/images/superheros/batman.png",
   "sound": "assets/sounds/superheros/im-batman.mp3",
+},
+{
+  "word": "superman",
+  "image": "assets/images/superheros/superman.png",
+  "sound": "assets/sounds/superheros/superman.wav",
+},
+{
+  "word": "theflash",
+  "image": "assets/images/superheros/the-flash.png",
+  "sound": "assets/sounds/superheros/theflash.mp3",
+},
+{
+  "word": "wonderwoman",
+  "image": "assets/images/superheros/wonder_woman.png",
+  "sound": "assets/sounds/superheros/wonder-woman.mp3",
+},
+{
+  "word": "deadpool",
+  "image": "assets/images/superheros/deadpool.png",
+  "sound": "assets/sounds/superheros/deadpool-theme.mp3",
+},
+{
+  "word": "thepunisher",
+  "image": "assets/images/superheros/Punisher.png",
+  "sound": "assets/sounds/superheros/the-punisher.mp3",
+},
+{
+  "word": "rogue",
+  "image": "assets/images/superheros/Rogue_Right_Portrait_Art.png",
+  "sound": "assets/sounds/superheros/Logan-and-Rogue-theme.mp3",
+},
+{
+  "word": "storm",
+  "image": "assets/images/superheros/x-men-storm.png",
+  "sound": "assets/sounds/superheros/Storms-Perfect-Storm.mp3",
+},
+{
+  "word": "jeangrey",
+  "image": "assets/images/superheros/Jean-Grey-x-men.jpg",
+  "sound": "assets/sounds/superheros/Jean-Grey-Theme-Dark-Phoenix.mp3",
+},
+{
+  "word": "theavengers",
+  "image": "assets/images/superheros/the-avengers.png",
+  "sound": "assets/sounds/superheros/The-Avengers-Soundtrack.mp3",
+},
+{
+  "word": "daredevil",
+  "image": "assets/images/superheros/daredevil.png",
+  "sound": "assets/sounds/superheros/Wont-Back-Down-Fuel.mp3",
 }
 ];
